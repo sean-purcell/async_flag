@@ -1,6 +1,6 @@
 [package]
 name = "async_flag"
-version = "0.1.2"
+version = "0.2.0"
 authors = ["Sean Purcell <me@seanp.xyz>"]
 edition = "2018"
 description = "A oneshot many-waiters, one-broadcaster async primitive."

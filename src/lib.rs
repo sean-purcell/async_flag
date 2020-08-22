@@ -98,6 +98,15 @@ impl SetterInner {
     }
 }
 
+impl Waiter {
+    /// Check if the flag is currently set.  This only returns the current value, and if it's not
+    /// set there's no guarantees for how long it will stay unset, it may even be set by the time
+    /// the function returns.
+    pub fn is_set(&self) -> bool {
+        self.f.load(Ordering::Acquire)
+    }
+}
+
 impl Drop for Setter {
     fn drop(&mut self) {
         if let Some(i) = self.i.take() {
