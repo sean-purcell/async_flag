@@ -103,7 +103,21 @@ impl Waiter {
     /// set there's no guarantees for how long it will stay unset, it may even be set by the time
     /// the function returns.
     pub fn is_set(&self) -> bool {
-        self.f.load(Ordering::Acquire)
+        self.f.load(Ordering::Acquire) == State::Set
+    }
+
+    /// Check if the flag was dropped.  This only returns the current value, and if it's not
+    /// set there's no guarantees for how long it will stay unset, it may even be set by the time
+    /// the function returns.
+    pub fn is_dropped(&self) -> bool {
+        self.f.load(Ordering::Acquire) == State::Dropped
+    }
+
+    /// Check if the flag was set to some value, either by being set or by being dropped.  This
+    /// only returns the current value, and if it's not set there's no guarantees for how long it
+    /// will stay unset, it may even be set by the time the function returns.
+    pub fn is_finished(&self) -> bool {
+        self.f.load(Ordering::Acquire) != State::NotSet
     }
 }
 
